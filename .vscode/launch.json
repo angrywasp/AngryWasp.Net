@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Test",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-debug",
+            "windows" :{
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test.exe",
+            },
+            "osx": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "linux": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "args": [
+                
+            ],
+            "cwd": "${workspaceFolder}/Bin/Binaries",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "stopAtEntry": false
+        }
+    ]
+}

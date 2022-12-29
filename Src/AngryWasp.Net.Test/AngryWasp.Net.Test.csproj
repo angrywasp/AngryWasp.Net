@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Application.targets" />
+    <ItemGroup>
+        <ProjectReference Include="../AngryWasp.Net/AngryWasp.Net.csproj" />
+    </ItemGroup>
+</Project>
