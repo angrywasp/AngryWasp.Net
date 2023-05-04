@@ -111,7 +111,7 @@ namespace AngryWasp.Net
 
             try
             {
-                output = new ConnectionId(input.FromByteHex());
+                output = new ConnectionId(input.FromHex());
                 return true;
             }
             catch { return false; }
