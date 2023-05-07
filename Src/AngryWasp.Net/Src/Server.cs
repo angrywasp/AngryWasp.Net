@@ -36,7 +36,6 @@ namespace AngryWasp.Net
                 while (true)
                 {
                     TcpClient client = listener.AcceptTcpClient();
-                    Log.Instance.WriteInfo($"Incoming connection request from {client.Client.RemoteEndPoint.ToString()}.");
                     HandshakeClient(client);
                 }
             });
@@ -48,7 +47,6 @@ namespace AngryWasp.Net
             {
                 try
                 {
-                    Log.Instance.WriteInfo($"Server waiting for handshake from {client.Client.RemoteEndPoint.ToString()}.");
                     NetworkStream ns = client.GetStream();
 
                     var buffer = new Memory<byte>(new byte[1024]);
@@ -59,7 +57,6 @@ namespace AngryWasp.Net
 
                     if (header == null)
                     {
-                        Log.Instance.WriteWarning("Client sent invalid header.");
                         client.Close();
                         return;
                     }
@@ -67,20 +64,11 @@ namespace AngryWasp.Net
                     bool accept = true;
 
                     if (header.Command != Handshake.CODE)
-                    {
-                        Log.Instance.WriteWarning("Client sent unexpected packet.");
                         accept = false;
-                    }
                     else if (data.Length != Header.LENGTH + header.DataLength)
-                    {
-                        Log.Instance.WriteWarning("Client sent incomplete handshake packet.");
                         accept = false;
-                    }
                     else if (Server.PeerId == header.PeerID)
-                    {
-                        Log.Instance.WriteWarning("Attempt to connect to self.");
                         accept = false;
-                    }
 
                     if (!accept)
                     {

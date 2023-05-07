@@ -156,27 +156,17 @@ namespace AngryWasp.Net
                                 continue;
                             }
 
-                            if (offset != 0)
-                            {
-                                Log.Instance.WriteInfo($"{offset} bytes of garbage data skipped");
-                                Log.Instance.WriteInfo($"{copy.Take(offset).ToArray().ToHex()}");
-                            }
-
                             var header = Header.Parse(copy.Skip(offset).Take(Header.LENGTH).ToArray());
 
                             if (header == null)
                             {
-                                Log.Instance.WriteInfo("Header parsing failed");
                                 offset++;
                                 continue;
                             }
 
                             var requiredLength = offset + Header.LENGTH + header.DataLength;
                             if (requiredLength > copy.Count)
-                            {
-                                Log.Instance.WriteInfo($"Not yet enough data in the buffer.");
                                 break;
-                            }
                             else
                             {
                                 offset += Header.LENGTH;

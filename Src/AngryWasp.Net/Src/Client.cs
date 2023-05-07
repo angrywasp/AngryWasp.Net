@@ -18,7 +18,6 @@ namespace AngryWasp.Net
 
                 try
                 {
-                    Log.Instance.WriteInfo($"Sending connection request to {host}:{port}.");
                     client.Connect(host, port);
                     NetworkStream ns = client.GetStream();
 
@@ -26,7 +25,6 @@ namespace AngryWasp.Net
                     await ns.WriteAsync(request).ConfigureAwait(false);
 
                     var buffer = new Memory<byte>(new byte[1024]);
-                    Log.Instance.WriteInfo($"Client waiting for handshake from server {host}:{port}.");
                     int bytesRead = await ns.ReadAsync(buffer).ConfigureAwait(false);
                     var data = buffer.Slice(0, bytesRead).ToArray();
 
@@ -34,7 +32,6 @@ namespace AngryWasp.Net
 
                     if (header == null)
                     {
-                        Log.Instance.WriteInfo($"Server {host}:{port} sent invalid header.");
                         client.Close();
                         return;
                     }
@@ -42,20 +39,11 @@ namespace AngryWasp.Net
                     bool accept = true;
 
                     if (header.Command != Handshake.CODE)
-                    {
-                        Log.Instance.WriteWarning($"Server {host}:{port} sent unexpected packet.");
                         accept = false;
-                    }
                     else if (data.Length != Header.LENGTH + header.DataLength)
-                    {
-                        Log.Instance.WriteWarning($"Server {host}:{port} sent incomplete handshake packet.");
                         accept = false;
-                    }
                     else if (Server.PeerId == header.PeerID)
-                    {
-                        Log.Instance.WriteWarning("Attempt to connect to self.");
                         accept = false;
-                    }
 
                     if (!accept)
                     {

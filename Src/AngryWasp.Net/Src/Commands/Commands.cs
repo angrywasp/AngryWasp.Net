@@ -23,17 +23,13 @@ namespace AngryWasp.Net
                 return;
             }
 
-            //Log.Instance.WriteInfo($"Added command handler for byte code {name}");
             commands.Add(cmd, handler);
         }
 
         public static void Process(Connection c, Header h, byte[] d)
         {
             if (h.DataLength != d.Length)
-            {
-                Log.Instance.WriteWarning($"Received incomplete message. Expected {h.DataLength} bytes, got {d.Length}");
                 return;
-            }
 
             Task.Run(async () =>
            {

@@ -38,24 +38,15 @@ namespace AngryWasp.Net
         public static Header Parse(byte[] bin)
         {
             if (bin.Length < Header.LENGTH)
-            {
-                Log.Instance.WriteInfo("Header.Parse failed. Incorrect length");
                 return null;
-            }
 
             int offset = 0;
 
             if (bin[offset++] != Config.NetId)
-            {
-                Log.Instance.WriteInfo("Header.Parse failed. Invalid Net ID");
                 return null;
-            }
 
             if (bin[offset++] != PROTOCOL_VERSION)
-            {
-                Log.Instance.WriteInfo("Header.Parse failed. Invalid protocol version");
                 return null;
-            }
 
             var header = new Header();
             header.isRequest = bin.ToBoolean(ref offset);
