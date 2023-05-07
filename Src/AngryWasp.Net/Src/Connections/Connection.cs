@@ -62,11 +62,8 @@ namespace AngryWasp.Net
 
         public async Task<bool> WriteAsync(byte[] input)
         {
-            if (client == null || client.Client == null || !client.Client.Connected)
-            {
-                await ConnectionManager.RemoveAsync(this, "Socket closed").ConfigureAwait(false);
-                return false;
-            }
+            var available = await IsAvailable(CancellationToken.None).ConfigureAwait(false);
+            if (!available) return false;
 
             await writeLock.WaitAsync().ConfigureAwait(false);
 
@@ -87,9 +84,21 @@ namespace AngryWasp.Net
                 return false;
             }
 
-            if (client == null || client.Client == null || !client.Client.Connected)
+            if (client == null)
             {
-                await ConnectionManager.RemoveAsync(this, "Socket closed").ConfigureAwait(false);
+                await ConnectionManager.RemoveAsync(this, "TcpClient is null").ConfigureAwait(false);
+                return false;
+            }
+
+            if (client.Client == null)
+            {
+                await ConnectionManager.RemoveAsync(this, "TcpClient.Socket is null").ConfigureAwait(false);
+                return false;
+            }
+
+            if (!client.Client.Connected)
+            {
+                await ConnectionManager.RemoveAsync(this, "TcpClient.Socket is not connected").ConfigureAwait(false);
                 return false;
             }
 

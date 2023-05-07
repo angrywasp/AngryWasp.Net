@@ -40,7 +40,10 @@ namespace AngryWasp.Net
                 return;
 
             var res = await GenerateRequest(false, nodes).ConfigureAwait(false);
-            await c.WriteAsync(res).ConfigureAwait(false);
+            var writeOk = await c.WriteAsync(res).ConfigureAwait(false);
+
+            if (!writeOk)
+                await ConnectionManager.RemoveAsync(c, $"Could not write to connection {c.PeerId}");
         }
     }
 }

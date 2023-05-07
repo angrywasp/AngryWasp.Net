@@ -13,7 +13,10 @@ namespace AngryWasp.Net
             if (!h.IsRequest)
                 return;
 
-            await c.WriteAsync(Header.Create(CODE, false).ToArray()).ConfigureAwait(false);
+            var writeOk = await c.WriteAsync(Header.Create(CODE, false).ToArray()).ConfigureAwait(false);
+
+            if (!writeOk)
+                await ConnectionManager.RemoveAsync(c, $"Could not write to connection {c.PeerId}");
         }
     }
 }

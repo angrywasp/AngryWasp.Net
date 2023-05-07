@@ -48,7 +48,7 @@ namespace AngryWasp.Net
             {
                 try
                 {
-                    Log.Instance.WriteInfo($"Waiting for handshake from {client.Client.RemoteEndPoint.ToString()}.");
+                    Log.Instance.WriteInfo($"Server waiting for handshake from {client.Client.RemoteEndPoint.ToString()}.");
                     NetworkStream ns = client.GetStream();
 
                     var buffer = new Memory<byte>(new byte[1024]);
