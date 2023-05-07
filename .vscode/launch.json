@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Test",
+            "name": "Test1",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-debug",
@@ -16,7 +16,57 @@
                 "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
             },
             "args": [
-                
+                "--port", "10000",
+                "--seeds", "127.0.0.1:20000;127.0.0.1:30000",
+                "--log-file", "test1.log"
+            ],
+            "cwd": "${workspaceFolder}/Bin/Binaries",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Test2",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-debug",
+            "windows" :{
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test.exe",
+            },
+            "osx": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "linux": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "args": [
+                "--port", "20000",
+                "--seeds", "127.0.0.1:10000;127.0.0.1:30000",
+                "--log-file", "test2.log"
+            ],
+            "cwd": "${workspaceFolder}/Bin/Binaries",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Test3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-debug",
+            "windows" :{
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test.exe",
+            },
+            "osx": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "linux": {
+                "program": "${workspaceFolder}/Bin/Binaries/net7.0/AngryWasp.Net.Test",
+            },
+            "args": [
+                "--port", "30000",
+                "--seeds", "127.0.0.1:10000;127.0.0.1:20000",
+                "--log-file", "test3.log"
             ],
             "cwd": "${workspaceFolder}/Bin/Binaries",
             "console": "integratedTerminal",

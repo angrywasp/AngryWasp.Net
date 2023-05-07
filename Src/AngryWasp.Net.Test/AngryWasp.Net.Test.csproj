@@ -1,6 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Application.targets" />
-    <ItemGroup>
-        <ProjectReference Include="../AngryWasp.Net/AngryWasp.Net.csproj" />
-    </ItemGroup>
+  <Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Application.targets"/>
+  <ItemGroup>
+    <ProjectReference Include="../AngryWasp.Net/AngryWasp.Net.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    <PackageReference Include="AngryWasp.Logger" Version="3.0.1"/>
+    <PackageReference Include="AngryWasp.Math" Version="1.0.1"/>
+    <PackageReference Include="AngryWasp.Helpers" Version="3.0.13"/>
+    <PackageReference Include="AngryWasp.Random" Version="1.0.2"/>
+    <PackageReference Include="AngryWasp.Cli" Version="3.0.8"/>
+  </ItemGroup>
 </Project>
