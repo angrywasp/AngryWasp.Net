@@ -31,7 +31,6 @@ namespace AngryWasp.Net.Test
                     ushort.TryParse(node[1], out port);
 
                 AngryWasp.Net.Config.AddSeedNode(host, port);
-                Log.Instance.WriteInfo($"Added seed node {host}:{port}");
             }
 
             CommandProcessor.RegisterDefaultCommands();

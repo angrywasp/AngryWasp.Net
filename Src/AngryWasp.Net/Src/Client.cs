@@ -41,10 +41,6 @@ namespace AngryWasp.Net
 
                     bool accept = true;
 
-                    var hasConnection = await ConnectionManager.HasConnection(header.PeerID).ConfigureAwait(false);
-
-                    if (hasConnection)
-                        accept = false;
                     if (header.Command != Handshake.CODE)
                     {
                         Log.Instance.WriteWarning($"Server {host}:{port} sent unexpected packet.");
@@ -64,6 +60,13 @@ namespace AngryWasp.Net
                     if (!accept)
                     {
                         client.Close();
+                        return;
+                    }
+
+                    var hasConnection = await ConnectionManager.HasConnection(header.PeerID).ConfigureAwait(false);
+                    if (hasConnection)
+                    {
+                        await ns.WriteAsync(Handshake.GenerateRequest(false)).ConfigureAwait(false);
                         return;
                     }
 
