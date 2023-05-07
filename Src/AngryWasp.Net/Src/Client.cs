@@ -34,7 +34,7 @@ namespace AngryWasp.Net
 
                     if (header == null)
                     {
-                        Log.Instance.WriteInfo("Server sent invalid header.");
+                        Log.Instance.WriteInfo($"{host}:{port} sent invalid header.");
                         client.Close();
                         return;
                     }
@@ -47,12 +47,12 @@ namespace AngryWasp.Net
                         accept = false;
                     if (header.Command != Handshake.CODE)
                     {
-                        Log.Instance.WriteWarning("Server sent unexpected packet.");
+                        Log.Instance.WriteWarning($"{host}:{port} sent unexpected packet.");
                         accept = false;
                     }
                     else if (data.Length != Header.LENGTH + header.DataLength)
                     {
-                        Log.Instance.WriteWarning("Server sent incomplete handshake packet.");
+                        Log.Instance.WriteWarning($"{host}:{port} sent incomplete handshake packet.");
                         accept = false;
                     }
                     else if (Server.PeerId == header.PeerID)

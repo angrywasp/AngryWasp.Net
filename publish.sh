@@ -25,4 +25,4 @@ function getNewVersion()
 version=$(getNewVersion $1 patch)
 
 dotnet build -c Release Src/AngryWasp.Net.sln -p:PackageVersion=${version}
-dotnet nuget push Bin/Binaries/AngryWasp.Net.${version}.nupkg --source https://api.nuget.org/v3/index.json
+dotnet nuget push Bin/Binaries/AngryWasp.Net.${version}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}

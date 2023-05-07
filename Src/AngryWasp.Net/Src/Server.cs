@@ -66,10 +66,6 @@ namespace AngryWasp.Net
 
                     bool accept = true;
 
-                    var hasConnection = await ConnectionManager.HasConnection(header.PeerID).ConfigureAwait(false);
-
-                    if (hasConnection)
-                        accept = false;
                     if (header.Command != Handshake.CODE)
                     {
                         Log.Instance.WriteWarning("Client sent unexpected packet.");
@@ -89,6 +85,16 @@ namespace AngryWasp.Net
                     if (!accept)
                     {
                         client.Close();
+                        return;
+                    }
+
+                    var hasConnection = await ConnectionManager.HasConnection(header.PeerID).ConfigureAwait(false);
+                    if (hasConnection)
+                    {
+                        //we already have this connection, but the person sending the request may not have it registered in
+                        //their connection manager which is why we are getting the request. So we send a response to say we
+                        //have accepted the request to get them to shut up about it
+                        await ns.WriteAsync(Handshake.GenerateRequest(false)).ConfigureAwait(false);
                         return;
                     }
 
