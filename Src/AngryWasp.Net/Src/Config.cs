@@ -28,11 +28,11 @@ namespace AngryWasp.Net
         public const int FAILURES_BEFORE_BAN = 3;
 
         private static byte netId = 0;
-        private static List<Node> seedNodes = new List<Node>();
+        private static List<(string Host, ushort Port)> seedNodes = new List<(string Host, ushort Port)>();
 
         public static byte NetId => netId;
 
-        public static List<Node> SeedNodes => seedNodes;
+        public static List<(string Host, ushort Port)> SeedNodes => seedNodes;
 
         public static void SetNetId(byte id)
         {
@@ -42,7 +42,10 @@ namespace AngryWasp.Net
         public static void AddSeedNode(string host, ushort port)
         {
             Log.Instance.WriteInfo($"Adding seed node at {host}:{port}");
-            seedNodes.Add(new Node(host, port, ConnectionId.Empty));
+            if (HasSeedNode(host, port))
+                return;
+
+            seedNodes.Add((host, port));
         }
 
         public static bool HasSeedNode(string host, ushort port)

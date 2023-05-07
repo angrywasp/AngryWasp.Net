@@ -79,24 +79,37 @@ namespace AngryWasp.Net
             });
         }
 
-        public static void ConnectHost(string host, ushort port) => Task.Run(() => { new Client().Connect(host, port); });
+        public static void ConnectHost(string host, ushort port) =>
+            Task.Run(async () =>
+                {
+                    var hasConnection = await ConnectionManager.HasConnection($"{host}:{port}").ConfigureAwait(false);
+                    if (hasConnection)
+                        return;
+
+                    new Client().Connect(host, port);
+                }
+            );
 
         public static void ConnectToSeedNodes()
         {
             foreach (var n in Config.SeedNodes)
-                Task.Run(() => { new Client().Connect(n.Host, n.Port); });
+                Task.Run(async () =>
+                    {
+                        var hasConnection = await ConnectionManager.HasConnection($"{n.Host}:{n.Port}").ConfigureAwait(false);
+                        if (hasConnection)
+                            return;
+
+                        new Client().Connect(n.Host, n.Port);
+                    }
+                );
         }
 
         public static async Task ConnectToNodeList(List<Node> nodes)
         {
             foreach (var n in nodes)
             {
-                var hasPeerId = await ConnectionManager.HasConnection(n.PeerID).ConfigureAwait(false);
-                if (hasPeerId)
-                    continue;
-
-                var hasHost = await ConnectionManager.HasConnection(n.PeerID).ConfigureAwait(false);
-                if (hasHost)
+                var hasConnection = await ConnectionManager.HasConnection(n.PeerID).ConfigureAwait(false);
+                if (hasConnection)
                     continue;
 
                 if (n.PeerID == Server.PeerId)
